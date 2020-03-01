@@ -1,24 +1,29 @@
 import React from 'react';
-import FormGroup from '@material-ui/core/FormGroup';
 import TextField from '@material-ui/core/TextField';
-import styled from 'styled-components';
 
-// TODO: add Typescript to this
-const FormNumberField = ({ handleChange, value, name, label }) => (
-    <FormGroupWithMargin row>
-        <TextField
-            name={name}
-            label={label}
-            onChange={handleChange}
-            value={value}
-            required
-            color='primary'
-        />
-    </FormGroupWithMargin>
+interface FormNumberFieldProps {
+    handleChange: (eventOrPath: string | React.ChangeEvent<any>) => void;
+    value: number | null;
+    name: string;
+    label: string;
+    children: any;
+}
+
+const FormNumberField = ({
+    handleChange,
+    value,
+    name,
+    label
+}: FormNumberFieldProps) => (
+    <TextField
+        name={name}
+        label={label}
+        onChange={handleChange}
+        value={value}
+        required
+        type='number'
+        color='primary'
+    />
 );
-
-const FormGroupWithMargin = styled(FormGroup)`
-    margin: 20px;
-`;
 
 export default FormNumberField;

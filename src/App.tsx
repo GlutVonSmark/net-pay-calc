@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import { TextField, Container, Button, FormGroup } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import FormNumberField from './FormNumberField';
 
 import styled, { css } from 'styled-components';
 
@@ -44,7 +44,7 @@ const App: React.FC = () => {
                 {/*  NOTE: dont like the blue color here */}
                 <Container>
                     <ThemeProvider theme={theme}>
-                        <FormGroupWithMargin row>
+                        {/* <FormGroupWithMargin row>
                             <TextField
                                 name='firstName'
                                 label='First Name'
@@ -66,18 +66,23 @@ const App: React.FC = () => {
                                 required
                                 color='primary'
                             />
-                        </FormGroupWithMargin>
-                        <FormGroupWithMargin row>
-                            <TextField
+                        </FormGroupWithMargin> */}
+                        <FormNumberField
+                            value={formik.values.salary}
+                            name={'salary'}
+                            label='Salary'
+                            handleChange={formik.handleChange}
+                        >
+                            {/* <TextField
                                 name='salary'
                                 label='Salary'
                                 type='number'
                                 required
                                 onChange={formik.handleChange}
                                 value={formik.values.salary}
-                            />
-                        </FormGroupWithMargin>
-                        <FormGroupWithMargin row>
+                            /> */}
+                        </FormNumberField>
+                        {/* <FormGroupWithMargin row>
                             <TextField
                                 name='travel'
                                 label='Travel'
@@ -97,7 +102,7 @@ const App: React.FC = () => {
                             >
                                 Submito!
                             </Button>
-                        </FormGroupWithMargin>
+                        </FormGroupWithMargin> */}
                     </ThemeProvider>
                 </Container>
                 <StyledDiv standOut>
@@ -122,6 +127,7 @@ const StyledPre = styled.pre`
 
 const StyledHeader = styled.h2`
     margin-top: 100px;
+    font-family: 'Roboto', 'Consolas';
 `;
 
 interface divProps {
