@@ -1,11 +1,13 @@
 const tax_credit: number = 275.0; // this also depends on civil status (married gets more credit)
-const health_insurance: number = 166.77;
-const travel: number = 120.83;
-const LPT = 20.08; //NOTE:  LAND PROPERTY TAX (not used in tax calculations)
-
 const TAX_20: number = 35300 / 12; // NOTE: this depends on civil status see: https://www.revenue.ie/en/personal-tax-credits-reliefs-and-exemptions/tax-relief-charts/index.aspx
 
-const calculate_net_pay = (pay: number, has_pension: boolean): number => {
+const calculate_net_pay = (
+    pay: number,
+    has_pension: boolean,
+    health_insurance = 166.77,
+    travel = 120.83,
+    LPT = 20.08
+): number => {
     const taxable_gross_pay = pay + health_insurance - travel;
     const pension: number = has_pension ? taxable_gross_pay * 0.03 : 0; // TODO: test this
 
@@ -25,7 +27,7 @@ export const calculate_prsi = (taxable_gross_pay: number): number =>
 // TODO: refactor this
 export const calculate_usc = (taxable_gross_pay: number): number => {
     const usc05: number = 1001;
-    const usc2: number = 1656.17; // FIXME: this will change from feb 2020. Do we want to take data?
+    const usc2: number = 1656.17; // FIXME: this will change from feb 2020. Do we want to take date?
     const usc45: number = 5837;
     let usc: number;
     // this is simplified

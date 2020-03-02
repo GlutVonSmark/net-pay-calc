@@ -6,24 +6,28 @@ interface FormNumberFieldProps {
     value: number | null;
     name: string;
     label: string;
-    children: any;
+    children?: any;
+    required?: boolean;
 }
 
 const FormNumberField = ({
     handleChange,
     value,
     name,
-    label
+    label,
+    required
 }: FormNumberFieldProps) => (
-    <TextField
-        name={name}
-        label={label}
-        onChange={handleChange}
-        value={value}
-        required
-        type='number'
-        color='primary'
-    />
+    <p>
+        <TextField
+            name={name}
+            label={label}
+            onChange={handleChange}
+            value={value}
+            required={required}
+            type='number'
+            color='primary'
+        />
+    </p>
 );
 
 export default FormNumberField;
