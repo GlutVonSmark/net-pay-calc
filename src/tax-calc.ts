@@ -19,10 +19,17 @@ const calculate_net_pay = (
     return pay - pension - usc - prsi - tax - travel - LPT;
 };
 
+// NOTE: this might be incorrect for people with lower sallaries (if salary is lower than tax_20)
 export const calculate_tax = (
     taxable_gross_pay: number,
     tax_credit: number
-): number => TAX_20 * 0.2 + (taxable_gross_pay - TAX_20) * 0.4 - tax_credit;
+): number => {
+    // TODO: refactor
+    const lowerBand = taxable_gross_pay < TAX_20 ? taxable_gross_pay : TAX_20;
+    const higherBand =
+        taxable_gross_pay < TAX_20 ? 0 : taxable_gross_pay - TAX_20;
+    return lowerBand * 0.2 + higherBand * 0.4 - tax_credit;
+};
 
 export const calculate_prsi = (taxable_gross_pay: number): number =>
     taxable_gross_pay * 0.04;
