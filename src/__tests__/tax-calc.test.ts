@@ -59,6 +59,8 @@ describe('calculate net pay', () => {
             tax_credit
         );
         expect(result.toFixed(1)).toEqual((3438.86).toFixed(1));
+        const result2 = calculate_net_pay(midLowBand, false, 0, 0, 0, 348.86);
+        expect(result2.toFixed(1)).toEqual((2270.61).toFixed(1));
     });
 });
 

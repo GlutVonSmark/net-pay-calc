@@ -1,6 +1,3 @@
-// this also depends on civil status (married gets more credit)
-const TAX_20: number = 35300 / 12; // NOTE: this depends on civil status see: https://www.revenue.ie/en/personal-tax-credits-reliefs-and-exemptions/tax-relief-charts/index.aspx
-
 const calculate_net_pay = (
     pay: number,
     has_pension: boolean,
@@ -24,17 +21,18 @@ export const calculate_tax = (
     taxable_gross_pay: number,
     tax_credit: number
 ): number => {
-    // TODO: refactor
-    const lowerBand = taxable_gross_pay < TAX_20 ? taxable_gross_pay : TAX_20;
-    const higherBand =
-        taxable_gross_pay < TAX_20 ? 0 : taxable_gross_pay - TAX_20;
-    return lowerBand * 0.2 + higherBand * 0.4 - tax_credit;
+    // NOTE: this also depends on civil status (married gets more credit) -> this might need to come as param is depends
+    const TAX_20: number = 35300 / 12; // NOTE: this depends on civil status see: https://www.revenue.ie/en/personal-tax-credits-reliefs-and-exemptions/tax-relief-charts/index.aspx
+
+    const lowerBand = Math.min(taxable_gross_pay, TAX_20) * 0.2;
+    const higherBand = Math.max(0, taxable_gross_pay - TAX_20) * 0.4;
+    return lowerBand + higherBand - tax_credit;
 };
 
 export const calculate_prsi = (taxable_gross_pay: number): number =>
     taxable_gross_pay * 0.04;
 
-// TODO: refactor this
+// TODO: refactor this (needs the lower band scenario)
 export const calculate_usc = (taxable_gross_pay: number): number => {
     const usc05: number = 1001;
     const usc2: number = 1656.17; // FIXME: this will change from feb 2020. Do we want to take date?
