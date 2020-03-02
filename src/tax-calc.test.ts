@@ -44,3 +44,4 @@ describe('calculate net pay', () => {
 // NOTE: differene is 58.6 euro (which is good)
 
 // scenario 2: how much less money do I get because I have health insurance
+// having insurance costs me 80 euro a month

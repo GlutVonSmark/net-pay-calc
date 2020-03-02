@@ -1,6 +1,5 @@
 const tax_credit: number = 275.0; // this also depends on civil status (married gets more credit)
-const health_insurance: number = 0;
-// const health_insurance: number = 166.77;
+const health_insurance: number = 166.77;
 const travel: number = 120.83;
 const LPT = 20.08; //NOTE:  LAND PROPERTY TAX (not used in tax calculations)
 
