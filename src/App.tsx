@@ -1,8 +1,9 @@
 import React from 'react';
 import { useFormik } from 'formik';
-import { TextField, Container, Button, FormGroup } from '@material-ui/core';
+import { Container, Button } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import FormNumberField from './FormNumberField';
 
 import styled, { css } from 'styled-components';
@@ -16,18 +17,18 @@ const theme = createMuiTheme({
 });
 
 interface FormValues {
-    firstName: string;
-    email: string;
     salary: number | null;
+    tax_credit: number | null;
     travel: number | null;
+    health_insurance: number | null;
 }
 
 const App: React.FC = () => {
     const initialValues: FormValues = {
-        firstName: '',
-        email: '',
         salary: null,
-        travel: null
+        travel: null,
+        health_insurance: null,
+        tax_credit: null
     };
     const formik = useFormik({
         initialValues,
@@ -41,59 +42,37 @@ const App: React.FC = () => {
                 Using Formik, Material UI with Styled Components and Typescript
             </StyledHeader>
             <StyledForm onSubmit={formik.handleSubmit}>
-                {/*  NOTE: dont like the blue color here */}
                 <Container>
                     <ThemeProvider theme={theme}>
-                        {/* <FormGroupWithMargin row>
-                            <TextField
-                                name='firstName'
-                                label='First Name'
-                                // helperText='Do you know your name?'
-                                onChange={formik.handleChange}
-                                value={formik.values.firstName}
-                                required
-                                color='primary'
-                            />
-                        </FormGroupWithMargin>
-                        <FormGroupWithMargin row>
-                            <TextField
-                                name='email'
-                                label='Your email'
-                                // helperText='Do you have an email?'
-                                onChange={formik.handleChange}
-                                value={formik.values.email}
-                                type='email'
-                                required
-                                color='primary'
-                            />
-                        </FormGroupWithMargin> */}
                         <FormNumberField
                             value={formik.values.salary}
-                            name={'salary'}
-                            label='Salary'
+                            name='salary'
+                            label='Annual salary'
+                            required
                             handleChange={formik.handleChange}
-                        >
-                            {/* <TextField
-                                name='salary'
-                                label='Salary'
-                                type='number'
-                                required
-                                onChange={formik.handleChange}
-                                value={formik.values.salary}
-                            /> */}
-                        </FormNumberField>
-                        {/* <FormGroupWithMargin row>
-                            <TextField
-                                name='travel'
-                                label='Travel'
-                                type='number'
-                                required
-                                onChange={formik.handleChange}
-                                value={formik.values.travel}
-                            />
-                        </FormGroupWithMargin>
-
-                        <FormGroupWithMargin row>
+                        ></FormNumberField>
+                        <FormNumberField
+                            name='tax_credit'
+                            label='Tax credit'
+                            required
+                            handleChange={formik.handleChange}
+                            value={formik.values.tax_credit}
+                        />
+                        <FormNumberField
+                            name='travel'
+                            label='Tax saver ticket'
+                            handleChange={formik.handleChange}
+                            value={formik.values.travel}
+                        />
+                        // NOTE: add info that you can add this to your tax
+                        credit (animated gif)
+                        <FormNumberField
+                            name='health_insurance'
+                            label='Health Insurance'
+                            handleChange={formik.handleChange}
+                            value={formik.values.health_insurance}
+                        />
+                        <p>
                             <Button
                                 variant='contained'
                                 type='submit'
@@ -102,7 +81,7 @@ const App: React.FC = () => {
                             >
                                 Submito!
                             </Button>
-                        </FormGroupWithMargin> */}
+                        </p>
                     </ThemeProvider>
                 </Container>
                 <StyledDiv standOut>
