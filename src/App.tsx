@@ -5,6 +5,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import FormNumberField from './FormNumberField';
+import calculate_net_pay from './tax-calc';
 
 import styled, { css } from 'styled-components';
 
@@ -18,22 +19,33 @@ const theme = createMuiTheme({
 
 interface FormValues {
     salary: number | null;
-    tax_credit: number | null;
-    travel: number | null;
-    health_insurance: number | null;
+    tax_credit: number;
+    travel: number;
+    health_insurance: number;
+    property_tax: number;
 }
 
 const App: React.FC = () => {
     const initialValues: FormValues = {
         salary: null,
-        travel: null,
-        health_insurance: null,
-        tax_credit: null
+        travel: 0,
+        health_insurance: 0,
+        tax_credit: 275,
+        property_tax: 0
     };
     const formik = useFormik({
         initialValues,
         onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
+            alert(
+                calculate_net_pay(
+                    values.salary!/12,
+                    false,
+                    values.health_insurance,
+                    values.travel,
+                    values.property_tax,
+                    values.tax_credit
+                )
+            );
         }
     });
     return (
@@ -64,13 +76,20 @@ const App: React.FC = () => {
                             handleChange={formik.handleChange}
                             value={formik.values.travel}
                         />
-                        // NOTE: add info that you can add this to your tax
-                        credit (animated gif)
+                        {/* NOTE: add info that you can add this to your tax  credit (animated gif)*/}
+
                         <FormNumberField
                             name='health_insurance'
                             label='Health Insurance'
                             handleChange={formik.handleChange}
                             value={formik.values.health_insurance}
+                        />
+
+                        <FormNumberField
+                            name='property_tax'
+                            label='Land Property Tax (LPT)'
+                            handleChange={formik.handleChange}
+                            value={formik.values.property_tax}
                         />
                         <p>
                             <Button

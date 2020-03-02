@@ -1,5 +1,6 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 interface FormNumberFieldProps {
     handleChange: (eventOrPath: string | React.ChangeEvent<any>) => void;
@@ -24,6 +25,14 @@ const FormNumberField = ({
             onChange={handleChange}
             value={value}
             required={required}
+            InputProps={{
+                endAdornment: (
+                    <InputAdornment position='start'>€</InputAdornment>
+                ),
+                inputProps: {
+                    style: { textAlign: 'right' }
+                }
+            }}
             type='number'
             color='primary'
         />
