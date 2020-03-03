@@ -5,7 +5,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import FormNumberField from './FormNumberField';
-import calculate_net_pay from './tax-calc';
+import calculate_net_pay, { calculate_tax, calculate_prsi, calculate_usc } from './tax-calc';
 
 import styled, { css } from 'styled-components';
 
@@ -18,7 +18,7 @@ const theme = createMuiTheme({
 });
 
 interface FormValues {
-    salary: number | null;
+    salary: number;
     tax_credit: number;
     travel: number;
     health_insurance: number;
@@ -27,7 +27,7 @@ interface FormValues {
 
 const App: React.FC = () => {
     const initialValues: FormValues = {
-        salary: null,
+        salary: 0,
         travel: 0,
         health_insurance: 0,
         tax_credit: 275,
@@ -38,7 +38,7 @@ const App: React.FC = () => {
         onSubmit: values => {
             alert(
                 calculate_net_pay(
-                    values.salary!/12,
+                    values.salary! / 12,
                     false,
                     values.health_insurance,
                     values.travel,
@@ -104,9 +104,30 @@ const App: React.FC = () => {
                     </ThemeProvider>
                 </Container>
                 <StyledDiv standOut>
-                    <StyledPre>
+                    {/* <StyledPre>
                         {JSON.stringify(formik.values, null, 2)}
-                    </StyledPre>
+                    </StyledPre> */}
+                    {/* TODO: extract this to its own component */}
+                    <StyledPre>
+
+                    {`Calculated Tax: ${calculate_tax(
+                           formik.values.salary/12 +
+                           formik.values.health_insurance -
+                           formik.values.travel,
+                           formik.values.tax_credit
+                           ).toFixed(2)}
+Calculated PRSI: ${calculate_prsi(
+                            formik.values.salary/12 +
+                            formik.values.health_insurance -
+                            formik.values.travel
+                        ).toFixed(2)}
+Calculated USC: ${calculate_usc(formik.values.salary/12 +
+    formik.values.health_insurance -
+    formik.values.travel)}
+Calculated Net Pay: ${calculate_net_pay(formik.values.salary/12, false, formik.values.health_insurance, formik.values.travel, formik.values.property_tax, formik.values.tax_credit).toFixed(2)}
+                           `}
+
+                        </StyledPre>
                 </StyledDiv>
             </StyledForm>
         </Container>
