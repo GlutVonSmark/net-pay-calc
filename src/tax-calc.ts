@@ -1,9 +1,9 @@
 const calculate_net_pay = (
     pay: number,
     has_pension: boolean,
-    health_insurance: number = 166.77,
-    travel = 120.83,
-    LPT = 20.08,
+    health_insurance: number,
+    travel: number,
+    LPT: number,
     tax_credit: number
 ): number => {
     const taxable_gross_pay = pay + health_insurance - travel;
@@ -16,13 +16,41 @@ const calculate_net_pay = (
     return pay - pension - usc - prsi - tax - travel - LPT;
 };
 
-// NOTE: this might be incorrect for people with lower sallaries (if salary is lower than tax_20)
+type CivilStatus =
+    | 'Single'
+    | 'Single With Children'
+    | 'Married one income'
+    | 'Married both with income';
+
+const get20TaxRateBand = (civilStatus: CivilStatus = 'Single'): number => {
+    let taxBand = 0;
+    switch (civilStatus) {
+        case 'Single':
+            taxBand = 35300;
+            break;
+        case 'Single With Children':
+            taxBand = 39300;
+            break;
+        case 'Married one income':
+            taxBand = 44300;
+            break;
+        case 'Married both with income':
+            // NOTE: this depends on civil status see: https://www.revenue.ie/en/personal-tax-credits-reliefs-and-exemptions/tax-relief-charts/index.aspx
+            // don't understand the max tax thingy in the for this option
+            taxBand = 44300;
+            break;
+        default:
+            break;
+    }
+    return taxBand / 12;
+};
+
 export const calculate_tax = (
     taxable_gross_pay: number,
     tax_credit: number
 ): number => {
     // NOTE: this also depends on civil status (married gets more credit) -> this might need to come as param is depends
-    const TAX_20: number = 35300 / 12; // NOTE: this depends on civil status see: https://www.revenue.ie/en/personal-tax-credits-reliefs-and-exemptions/tax-relief-charts/index.aspx
+    const TAX_20 = get20TaxRateBand();
 
     const lowerBand = Math.min(taxable_gross_pay, TAX_20) * 0.2;
     const higherBand = Math.max(0, taxable_gross_pay - TAX_20) * 0.4;
