@@ -17,6 +17,7 @@ const theme = createMuiTheme({
     }
 });
 
+
 interface FormValues {
     salary: number;
     tax_credit: number;
@@ -108,7 +109,8 @@ const App: React.FC = () => {
                         {JSON.stringify(formik.values, null, 2)}
                     </StyledPre> */}
                     {/* TODO: extract this to its own component */}
-                    <StyledPre>
+                    
+                    {formik.values.salary !== 0 && <StyledPre>
 
                     {`Calculated Tax: ${calculate_tax(
                            formik.values.salary/12 +
@@ -127,7 +129,7 @@ Calculated USC: ${calculate_usc(formik.values.salary/12 +
 Calculated Net Pay: ${calculate_net_pay(formik.values.salary/12, false, formik.values.health_insurance, formik.values.travel, formik.values.property_tax, formik.values.tax_credit).toFixed(2)}
                            `}
 
-                        </StyledPre>
+                        </StyledPre>}
                 </StyledDiv>
             </StyledForm>
         </Container>
