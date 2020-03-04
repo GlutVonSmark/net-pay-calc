@@ -38,7 +38,7 @@ const App: React.FC = () => {
         onSubmit: values => {
             alert(
                 calculate_net_pay(
-                    values.salary!/12,
+                    values.salary! / 12,
                     false,
                     values.health_insurance,
                     values.travel,
@@ -49,9 +49,10 @@ const App: React.FC = () => {
         }
     });
     return (
-        <Container maxWidth='md'>
+        <Container maxWidth='md' style={{ textAlign: 'center' }}>
             <StyledHeader>
                 Using Formik, Material UI with Styled Components and Typescript
+                and Netlify
             </StyledHeader>
             <StyledForm onSubmit={formik.handleSubmit}>
                 <Container>
