@@ -35,7 +35,7 @@ travel)}
 
             </StyledPre>
             <StyledParagraph>
-            Calculated Net Pay: ${calculate_net_pay(salary/12, false, health_insurance, travel, property_tax, tax_credit).toFixed(2)}
+            Calculated Net Pay: ${calculate_net_pay(salary, false, health_insurance, travel, property_tax, tax_credit).toFixed(2)}
         </StyledParagraph>
         </>
     )
