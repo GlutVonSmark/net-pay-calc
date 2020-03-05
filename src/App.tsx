@@ -5,7 +5,8 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import FormNumberField from './FormNumberField';
-import calculate_net_pay, { calculate_tax, calculate_prsi, calculate_usc } from './tax-calc';
+import Results from './Results'
+import calculate_net_pay from './tax-calc';
 
 import styled, { css } from 'styled-components';
 
@@ -106,31 +107,17 @@ const App: React.FC = () => {
                     </ThemeProvider>
                 </Container>
                 <StyledDiv standOut>
-                    {/* <StyledPre>
-                        {JSON.stringify(formik.values, null, 2)}
-                    </StyledPre> */}
-                    {/* TODO: extract this to its own component */}
+                        {/* {JSON.stringify(formik.values, null, 2)} */}
                     
-                    {formik.values.salary !== 0 && <StyledPre>
-
-                    {`Calculated Tax: ${calculate_tax(
-                           formik.values.salary/12 +
-                           formik.values.health_insurance -
-                           formik.values.travel,
-                           formik.values.tax_credit
-                           ).toFixed(2)}
-Calculated PRSI: ${calculate_prsi(
-                            formik.values.salary/12 +
-                            formik.values.health_insurance -
-                            formik.values.travel
-                        ).toFixed(2)}
-Calculated USC: ${calculate_usc(formik.values.salary/12 +
-    formik.values.health_insurance -
-    formik.values.travel)}
-Calculated Net Pay: ${calculate_net_pay(formik.values.salary/12, false, formik.values.health_insurance, formik.values.travel, formik.values.property_tax, formik.values.tax_credit).toFixed(2)}
-                           `}
-
-                        </StyledPre>}
+                    {formik.values.salary > 0 && 
+                        <Results 
+                            salary={formik.values.salary/12}
+                            health_insurance={formik.values.health_insurance}
+                            travel={formik.values.travel}
+                            tax_credit={formik.values.tax_credit}
+                            property_tax={formik.values.property_tax}
+                        />
+                    }
                 </StyledDiv>
             </StyledForm>
         </Container>
@@ -141,11 +128,7 @@ const StyledForm = styled.form`
     margin-top: 50px;
 `;
 
-const StyledPre = styled.pre`
-    font-weight: bold;
-    font-size: larger;
-    margin-top: 50px;
-`;
+
 
 const StyledHeader = styled.h2`
     margin-top: 100px;
