@@ -18,6 +18,7 @@ import Results from './Results';
 import calculate_net_pay from './tax-calc';
 
 import styled, { css } from 'styled-components';
+import { motion } from 'framer-motion';
 
 const theme = createMuiTheme({
     palette: {
@@ -47,16 +48,19 @@ interface FormValues {
     salary: number | null;
     tax_credit: number;
     travel: number | null;
-    health_insurance: number | null;
     property_tax: number | null;
     bonuses: { id: number; name: string; value: number | null }[];
 }
+
+const variants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 }
+};
 
 const App: React.FC = () => {
     const initialValues: FormValues = {
         salary: null,
         travel: null,
-        health_insurance: null,
         bonuses: [{ id: 1, name: 'Health Insurance', value: 166.77 }],
         tax_credit: 275,
         property_tax: null
@@ -76,8 +80,8 @@ const App: React.FC = () => {
                         calculate_net_pay(
                             values.salary! / 12,
                             false,
-                            values.health_insurance!,
                             values.travel!,
+                            0,
                             values.property_tax!,
                             values.tax_credit!
                         )
@@ -108,7 +112,6 @@ const App: React.FC = () => {
                                     handleChange={handleChange}
                                     value={values.travel}
                                 />
-                                {/* NOTE: add info that you can add this to your tax  credit (animated gif)*/}
                                 <FieldArray name='bonuses'>
                                     {arrayHelpers => (
                                         <div>
@@ -129,7 +132,10 @@ const App: React.FC = () => {
                                             {values.bonuses.map(
                                                 (bik, index) => {
                                                     return (
-                                                        <div
+                                                        <motion.div
+                                                            initial='hidden'
+                                                            animate='visible'
+                                                            variants={variants}
                                                             key={bik.id}
                                                             style={{
                                                                 marginTop:
@@ -187,30 +193,13 @@ const App: React.FC = () => {
                                                                     <DeleteIcon fontSize='small' />
                                                                 </IconButton>
                                                             </LightTooltip>
-                                                            {/* <Button
-                                                                color='secondary'
-                                                                variant='contained'
-                                                                onClick={() =>
-                                                                    arrayHelpers.remove(
-                                                                        index
-                                                                    )
-                                                                }
-                                                            >
-                                                                x
-                                                            </Button> */}
-                                                        </div>
+                                                        </motion.div>
                                                     );
                                                 }
                                             )}
                                         </div>
                                     )}
                                 </FieldArray>
-                                {/* <FormNumberField
-                                    name='health_insurance'
-                                    label='Health Insurance'
-                                    handleChange={handleChange}
-                                    value={values.health_insurance}
-                                /> */}
 
                                 <FormNumberField
                                     name='property_tax'
@@ -236,7 +225,10 @@ const App: React.FC = () => {
                             {values.salary && values.salary > 0 && (
                                 <Results
                                     salary={values.salary / 12}
-                                    health_insurance={values.health_insurance!}
+                                    bik={values.bonuses.reduce(
+                                        (acc, curr) => curr.value! + acc,
+                                        0
+                                    )}
                                     travel={values.travel!}
                                     tax_credit={values.tax_credit}
                                     property_tax={values.property_tax!}
@@ -257,6 +249,10 @@ const StyledForm = styled(Form)`
 const StyledHeader = styled.h2`
     margin-top: 100px;
     font-family: 'Roboto', 'Consolas';
+`;
+
+const AnimatedDiv = styled.div`
+    transition: 1s;
 `;
 
 interface divProps {
