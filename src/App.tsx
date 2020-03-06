@@ -1,5 +1,5 @@
 import React from 'react';
-import {  FieldArray, Formik } from 'formik';
+import {  FieldArray, Formik, Field, Form } from 'formik';
 import { Container, Button } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
@@ -21,54 +21,48 @@ const theme = createMuiTheme({
 
 
 interface FormValues {
-    salary: number;
-    tax_credit: number;
-    travel: number;
-    health_insurance: number;
-    property_tax: number;
+    salary: number | null;
+    tax_credit: number ;
+    travel: number | null;
+    health_insurance: number | null;
+    property_tax: number | null;
 }
 
 const App: React.FC = () => {
     const initialValues: FormValues = {
-        salary: 0,
-        travel: 0,
-        health_insurance: 0,
+        salary: null,
+        travel: null,
+        health_insurance: null,
         tax_credit: 275,
-        property_tax: 0
+        property_tax: null
     };
 
-    // const formik = useFormik({
-    //     initialValues,
-    //     onSubmit: values => {
-    //         alert(
-    //             calculate_net_pay(
-    //                 values.salary! / 12,
-    //                 false,
-    //                 values.health_insurance,
-    //                 values.travel,
-    //                 values.property_tax,
-    //                 values.tax_credit
-    //             )
-    //         );
-    //     }
-    // });
+   
     // TODO: handle Blur (what to do with it)
     return (
-
-
-
         <Container maxWidth='md' style={{ textAlign: 'center' }}>
                 
                 <StyledHeader>
                     Using Formik, Material UI with Styled Components and Typescript
                     and Netlify
                 </StyledHeader>
-            <Formik initialValues={initialValues} onSubmit={values => console.log(values)}>
+            <Formik initialValues={initialValues} onSubmit={values => {
+            alert(
+                calculate_net_pay(
+                    values.salary! / 12,
+                    false,
+                    values.health_insurance!,
+                    values.travel!,
+                    values.property_tax!,
+                    values.tax_credit!
+                )
+            );
+        }}>
                 {
-                    ({values, handleSubmit, handleChange}) => (
+                    ({values,handleChange}) => (
 
                     
-                    <StyledForm onSubmit={handleSubmit}>
+                    <StyledForm>
                     <Container>
                         <ThemeProvider theme={theme}>
                             <FormNumberField
@@ -102,7 +96,7 @@ const App: React.FC = () => {
     
                             <FormNumberField
                                 name='property_tax'
-                                label='Land Property Tax (LPT)'
+                                label='Property Tax (LPT)'
                                 handleChange={handleChange}
                                 value={values.property_tax}
                                 />
@@ -121,13 +115,13 @@ const App: React.FC = () => {
                     <StyledDiv standOut>
                             {JSON.stringify(values, null, 2)}
                         
-                        {values.salary > 0 && 
+                        {values.salary && values.salary > 0 && 
                             <Results 
                             salary={values.salary/12}
-                            health_insurance={values.health_insurance}
-                            travel={values.travel}
+                            health_insurance={values.health_insurance!}
+                            travel={values.travel!}
                             tax_credit={values.tax_credit}
-                            property_tax={values.property_tax}
+                            property_tax={values.property_tax!}
                             />
                         }
                     </StyledDiv>
@@ -138,7 +132,7 @@ const App: React.FC = () => {
     );
 };
 
-const StyledForm = styled.form`
+const StyledForm = styled(Form)`
     margin-top: 50px;
 `;
 
