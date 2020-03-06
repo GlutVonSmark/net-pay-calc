@@ -1,13 +1,14 @@
 import React from 'react';
-import {  FieldArray, Formik, Field, Form } from 'formik';
+import {  FieldArray, Formik, Form } from 'formik';
+
 import { Container, Button } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import FormNumberField from './FormNumberField';
-import Results from './Results'
+import Results from './Results';
 import calculate_net_pay from './tax-calc';
-import { FriendList } from './example'
+import { FriendList } from './example';
 
 import styled, { css } from 'styled-components';
 
@@ -18,7 +19,6 @@ const theme = createMuiTheme({
         }
     }
 });
-
 
 interface FormValues {
     salary: number | null;
@@ -71,27 +71,28 @@ const App: React.FC = () => {
                                 label='Annual salary'
                                 required
                                 handleChange={handleChange}
+ 
                                 ></FormNumberField>
-                            <FormNumberField
-                                name='tax_credit'
-                                label='Tax credit'
-                                required
-                                handleChange={handleChange}
-                                value={values.tax_credit}
+                                <FormNumberField
+                                    name='tax_credit'
+                                    label='Tax credit'
+                                    required
+                                    handleChange={handleChange}
+                                    value={values.tax_credit}
                                 />
-                            <FormNumberField
-                                name='travel'
-                                label='Tax saver ticket'
-                                handleChange={handleChange}
-                                value={values.travel}
+                                <FormNumberField
+                                    name='travel'
+                                    label='Tax saver ticket'
+                                    handleChange={handleChange}
+                                    value={values.travel}
                                 />
-                            {/* NOTE: add info that you can add this to your tax  credit (animated gif)*/}
-    
-                            <FormNumberField
-                                name='health_insurance'
-                                label='Health Insurance'
-                                handleChange={handleChange}
-                                value={values.health_insurance}
+                                {/* NOTE: add info that you can add this to your tax  credit (animated gif)*/}
+
+                                <FormNumberField
+                                    name='health_insurance'
+                                    label='Health Insurance'
+                                    handleChange={handleChange}
+                                    value={values.health_insurance}
                                 />
     
                             <FormNumberField
@@ -99,20 +100,21 @@ const App: React.FC = () => {
                                 label='Property Tax (LPT)'
                                 handleChange={handleChange}
                                 value={values.property_tax}
+
                                 />
-                            <p>
-                                <Button
-                                    variant='contained'
-                                    type='submit'
-                                    color='primary'
-                                    startIcon={<CloudUploadIcon />}
+                                <p>
+                                    <Button
+                                        variant='contained'
+                                        type='submit'
+                                        color='primary'
+                                        startIcon={<CloudUploadIcon />}
                                     >
-                                    Submito!
-                                </Button>
-                            </p>
-                        </ThemeProvider>
-                    </Container>
-                    <StyledDiv standOut>
+                                        Submito!
+                                    </Button>
+                                </p>
+                            </ThemeProvider>
+                        </Container>
+                        <StyledDiv standOut>
                             {JSON.stringify(values, null, 2)}
                         
                         {values.salary && values.salary > 0 && 
@@ -127,6 +129,7 @@ const App: React.FC = () => {
                     </StyledDiv>
                 </StyledForm>
                     )}
+
             </Formik>
         </Container>
     );
@@ -135,8 +138,6 @@ const App: React.FC = () => {
 const StyledForm = styled(Form)`
     margin-top: 50px;
 `;
-
-
 
 const StyledHeader = styled.h2`
     margin-top: 100px;
