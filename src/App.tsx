@@ -1,14 +1,21 @@
 import React from 'react';
 import { FieldArray, Formik, Form, Field } from 'formik';
 
-import { Container, Button, TextField } from '@material-ui/core';
-import { createMuiTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
+import {
+    Container,
+    Button,
+    TextField,
+    InputAdornment,
+    IconButton,
+    Tooltip
+} from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { createMuiTheme, makeStyles, Theme } from '@material-ui/core/styles';
+import { ThemeProvider, withStyles } from '@material-ui/styles';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import FormNumberField from './FormNumberField';
 import Results from './Results';
 import calculate_net_pay from './tax-calc';
-import { FriendList } from './example';
 
 import styled, { css } from 'styled-components';
 
@@ -19,6 +26,21 @@ const theme = createMuiTheme({
         }
     }
 });
+
+const useStyles = makeStyles({
+    root: {
+        marginRight: '15px'
+    }
+});
+
+const LightTooltip = withStyles((theme: Theme) => ({
+    tooltip: {
+        backgroundColor: theme.palette.common.white,
+        color: 'rgba(0, 0, 0, 0.87)',
+        boxShadow: theme.shadows[1],
+        fontSize: 18
+    }
+}))(Tooltip);
 
 // FIXME:  why do I have those nulls here anyway (for default values)
 interface FormValues {
@@ -35,11 +57,11 @@ const App: React.FC = () => {
         salary: null,
         travel: null,
         health_insurance: null,
-        bonuses: [],
+        bonuses: [{ id: 1, name: 'Health Insurance', value: 166.77 }],
         tax_credit: 275,
         property_tax: null
     };
-
+    const classes = useStyles();
     // TODO: handle Blur (what to do with it)
     return (
         <Container maxWidth='md' style={{ textAlign: 'center' }}>
@@ -107,22 +129,75 @@ const App: React.FC = () => {
                                             {values.bonuses.map(
                                                 (bik, index) => {
                                                     return (
-                                                        <div key={bik.id}>
+                                                        <div
+                                                            key={bik.id}
+                                                            style={{
+                                                                marginTop:
+                                                                    '15px'
+                                                            }}
+                                                        >
                                                             <Field
                                                                 as={TextField}
                                                                 name={`bonuses.${index}.name`}
+                                                                className={
+                                                                    classes.root
+                                                                }
                                                             />
 
-                                                            <FormNumberField
-                                                                label={bik.name}
+                                                            <TextField
+                                                                // label={bInputAdornmentik.name}
                                                                 name={`bonuses.${index}.value`}
-                                                                handleChange={
+                                                                onChange={
                                                                     handleChange
                                                                 }
                                                                 value={
                                                                     bik.value
                                                                 }
+                                                                InputProps={{
+                                                                    endAdornment: (
+                                                                        <InputAdornment position='start'>
+                                                                            €
+                                                                        </InputAdornment>
+                                                                    ),
+                                                                    inputProps: {
+                                                                        style: {
+                                                                            textAlign:
+                                                                                'right'
+                                                                        }
+                                                                    }
+                                                                }}
+                                                                type='number'
                                                             />
+                                                            <LightTooltip
+                                                                title='shikaka'
+                                                                placement='right'
+                                                            >
+                                                                <IconButton
+                                                                    aria-label='delete'
+                                                                    onClick={() =>
+                                                                        arrayHelpers.remove(
+                                                                            index
+                                                                        )
+                                                                    }
+                                                                    style={{
+                                                                        padding:
+                                                                            '8px'
+                                                                    }}
+                                                                >
+                                                                    <DeleteIcon fontSize='small' />
+                                                                </IconButton>
+                                                            </LightTooltip>
+                                                            {/* <Button
+                                                                color='secondary'
+                                                                variant='contained'
+                                                                onClick={() =>
+                                                                    arrayHelpers.remove(
+                                                                        index
+                                                                    )
+                                                                }
+                                                            >
+                                                                x
+                                                            </Button> */}
                                                         </div>
                                                     );
                                                 }
@@ -130,12 +205,12 @@ const App: React.FC = () => {
                                         </div>
                                     )}
                                 </FieldArray>
-                                <FormNumberField
+                                {/* <FormNumberField
                                     name='health_insurance'
                                     label='Health Insurance'
                                     handleChange={handleChange}
                                     value={values.health_insurance}
-                                />
+                                /> */}
 
                                 <FormNumberField
                                     name='property_tax'
@@ -156,7 +231,7 @@ const App: React.FC = () => {
                             </ThemeProvider>
                         </Container>
                         <StyledDiv standOut>
-                            {JSON.stringify(values, null, 2)}
+                            {/* {JSON.stringify(values, null, 2)} */}
 
                             {values.salary && values.salary > 0 && (
                                 <Results
