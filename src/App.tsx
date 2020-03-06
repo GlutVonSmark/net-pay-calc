@@ -18,7 +18,7 @@ import Results from './Results';
 import calculate_net_pay from './tax-calc';
 
 import styled, { css } from 'styled-components';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const theme = createMuiTheme({
     palette: {
@@ -73,6 +73,18 @@ const App: React.FC = () => {
                 Using Formik, Material UI with Styled Components and Typescript
                 and Netlify
             </StyledHeader>
+            <h4>
+                <a
+                    href='https://www.revenue.ie/en/jobs-and-pensions/calculating-your-income-tax/index.aspx'
+                    style={{
+                        textDecoration: 'none',
+                        color: 'grey',
+                        fontFamily: 'roboto'
+                    }}
+                >
+                    official docs
+                </a>
+            </h4>
             <Formik
                 initialValues={initialValues}
                 onSubmit={values => {
@@ -128,75 +140,84 @@ const App: React.FC = () => {
                                             >
                                                 add BIK (benefit in kind)
                                             </Button>
-
-                                            {values.bonuses.map(
-                                                (bik, index) => {
-                                                    return (
-                                                        <motion.div
-                                                            initial='hidden'
-                                                            animate='visible'
-                                                            variants={variants}
-                                                            key={bik.id}
-                                                            style={{
-                                                                marginTop:
-                                                                    '15px'
-                                                            }}
-                                                        >
-                                                            <Field
-                                                                as={TextField}
-                                                                name={`bonuses.${index}.name`}
-                                                                className={
-                                                                    classes.root
-                                                                }
-                                                            />
-
-                                                            <TextField
-                                                                // label={bInputAdornmentik.name}
-                                                                name={`bonuses.${index}.value`}
-                                                                onChange={
-                                                                    handleChange
-                                                                }
-                                                                value={
-                                                                    bik.value
-                                                                }
-                                                                InputProps={{
-                                                                    endAdornment: (
-                                                                        <InputAdornment position='start'>
-                                                                            €
-                                                                        </InputAdornment>
-                                                                    ),
-                                                                    inputProps: {
-                                                                        style: {
-                                                                            textAlign:
-                                                                                'right'
-                                                                        }
-                                                                    }
+                                            <AnimatePresence>
+                                                {values.bonuses.map(
+                                                    (bik, index) => {
+                                                        return (
+                                                            <motion.div
+                                                                initial={{
+                                                                    opacity: 0
                                                                 }}
-                                                                type='number'
-                                                            />
-                                                            <LightTooltip
-                                                                title='shikaka'
-                                                                placement='right'
+                                                                animate={{
+                                                                    opacity: 1
+                                                                }}
+                                                                exit={{
+                                                                    opacity: 0
+                                                                }}
+                                                                key={bik.id}
+                                                                style={{
+                                                                    marginTop:
+                                                                        '15px'
+                                                                }}
                                                             >
-                                                                <IconButton
-                                                                    aria-label='delete'
-                                                                    onClick={() =>
-                                                                        arrayHelpers.remove(
-                                                                            index
-                                                                        )
+                                                                <Field
+                                                                    as={
+                                                                        TextField
                                                                     }
-                                                                    style={{
-                                                                        padding:
-                                                                            '8px'
+                                                                    name={`bonuses.${index}.name`}
+                                                                    className={
+                                                                        classes.root
+                                                                    }
+                                                                />
+
+                                                                <TextField
+                                                                    // label={bInputAdornmentik.name}
+                                                                    name={`bonuses.${index}.value`}
+                                                                    onChange={
+                                                                        handleChange
+                                                                    }
+                                                                    value={
+                                                                        bik.value
+                                                                    }
+                                                                    InputProps={{
+                                                                        endAdornment: (
+                                                                            <InputAdornment position='start'>
+                                                                                €
+                                                                            </InputAdornment>
+                                                                        ),
+                                                                        inputProps: {
+                                                                            style: {
+                                                                                textAlign:
+                                                                                    'right'
+                                                                            }
+                                                                        }
                                                                     }}
+                                                                    type='number'
+                                                                />
+                                                                <LightTooltip
+                                                                    title='shikaka'
+                                                                    placement='right'
                                                                 >
-                                                                    <DeleteIcon fontSize='small' />
-                                                                </IconButton>
-                                                            </LightTooltip>
-                                                        </motion.div>
-                                                    );
-                                                }
-                                            )}
+                                                                    <IconButton
+                                                                        aria-label='delete'
+                                                                        onClick={() =>
+                                                                            arrayHelpers.remove(
+                                                                                index
+                                                                            )
+                                                                        }
+                                                                        style={{
+                                                                            padding:
+                                                                                '8px'
+                                                                        }}
+                                                                    >
+                                                                        <DeleteIcon fontSize='small' />
+                                                                    </IconButton>
+                                                                </LightTooltip>
+                                                            </motion.div>
+                                                        );
+                                                    }
+                                                )}
+                                            </AnimatePresence>
                                         </div>
                                     )}
                                 </FieldArray>
