@@ -6,8 +6,7 @@ import {
     Button,
     TextField,
     InputAdornment,
-    IconButton,
-    Tooltip
+    IconButton
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { createMuiTheme, makeStyles, Theme } from '@material-ui/core/styles';
@@ -15,6 +14,7 @@ import { ThemeProvider, withStyles } from '@material-ui/styles';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import FormNumberField from './FormNumberField';
 import Results from './Results';
+import LightTooltip from './LightTooltip';
 import calculate_net_pay from './tax-calc';
 
 import styled, { css } from 'styled-components';
@@ -35,16 +35,6 @@ const useStyles = makeStyles({
     }
 });
 
-const LightTooltip = withStyles((theme: Theme) => ({
-    tooltip: {
-        backgroundColor: theme.palette.common.white,
-        color: 'rgba(0, 0, 0, 0.87)',
-        boxShadow: theme.shadows[1],
-        fontSize: 18
-    }
-}))(Tooltip);
-
-// FIXME:  why do I have those nulls here anyway (for default values)
 interface FormValues {
     salary: number | null;
     tax_credit: number;
@@ -63,7 +53,6 @@ const initialValues: FormValues = {
 
 const App: React.FC = () => {
     const classes = useStyles();
-    // TODO: handle Blur (what to do with it)
     return (
         <Container maxWidth='md' style={{ textAlign: 'center' }}>
             <Header />
@@ -177,7 +166,7 @@ const App: React.FC = () => {
                                                                     type='number'
                                                                 />
                                                                 <LightTooltip
-                                                                    title='shikaka'
+                                                                    title='delete'
                                                                     placement='right'
                                                                 >
                                                                     <IconButton
