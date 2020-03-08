@@ -25,23 +25,19 @@ const FormNumberInput = ({ name, label, required }: FormNumberInputProps) => (
 );
 
 const FormNumberField = ({ label, required, field }: FormNumberFieldProps) => (
-    <p>
-        <TextField
-            {...field}
-            label={label}
-            required={required}
-            InputProps={{
-                endAdornment: (
-                    <InputAdornment position='start'>€</InputAdornment>
-                ),
-                inputProps: {
-                    style: { textAlign: 'right' }
-                }
-            }}
-            type='number'
-            color='primary'
-        />
-    </p>
+    <TextField
+        {...field}
+        label={label}
+        required={required}
+        InputProps={{
+            endAdornment: <InputAdornment position='start'>€</InputAdornment>,
+            inputProps: {
+                style: { textAlign: 'right' }
+            }
+        }}
+        type='number'
+        color='primary'
+    />
 );
 
 export default FormNumberInput;

@@ -5,13 +5,13 @@ interface FormValues {
     tax_credit: number;
     travel: number | null;
     property_tax: number | null;
-    bonuses: { id: number; name: string; value: number | null }[];
+    bonuses: { id: string; name: string; value: number | null }[];
 }
 
 export const initialValues: FormValues = {
     salary: null,
     travel: null,
-    bonuses: [{ id: 1, name: 'Health Insurance', value: 166.77 }],
+    bonuses: [{ id: '1abc', name: 'Health Insurance', value: 166.77 }],
     tax_credit: 275,
     property_tax: null
 };

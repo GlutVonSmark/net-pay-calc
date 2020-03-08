@@ -8,7 +8,6 @@ import {
     IconButton
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import FormNumberInput from './FormNumberField';
@@ -20,15 +19,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Header from './Header';
 import theme from './muiMainTheme';
 import { initialValues, onSubmit } from './formikConfig';
-
-const useStyles = makeStyles({
-    marginRight: {
-        marginRight: '15px'
-    }
-});
+import DynamicField from './DynamicField/DynamicField';
 
 const App: React.FC = () => {
-    const classes = useStyles();
     return (
         <Container maxWidth='md' style={{ textAlign: 'center' }}>
             <ThemeProvider theme={theme}>
@@ -51,110 +44,16 @@ const App: React.FC = () => {
                                     name='travel'
                                     label='Tax saver ticket'
                                 />
-                                <FieldArray name='bonuses'>
-                                    {arrayHelpers => (
-                                        <div>
-                                            <Button
-                                                color='primary'
-                                                variant='contained'
-                                                onClick={() =>
-                                                    arrayHelpers.push({
-                                                        id: Math.random(),
-                                                        name: '',
-                                                        value: null
-                                                    })
-                                                }
-                                            >
-                                                add BIK (benefit in kind)
-                                            </Button>
-                                            <AnimatePresence>
-                                                {values.bonuses.map(
-                                                    (bik, index) => {
-                                                        return (
-                                                            <motion.div
-                                                                initial={{
-                                                                    opacity: 0
-                                                                }}
-                                                                animate={{
-                                                                    opacity: 1
-                                                                }}
-                                                                exit={{
-                                                                    opacity: 0
-                                                                }}
-                                                                key={bik.id}
-                                                                style={{
-                                                                    marginTop:
-                                                                        '15px'
-                                                                }}
-                                                            >
-                                                                <Field
-                                                                    as={
-                                                                        TextField
-                                                                    }
-                                                                    name={`bonuses.${index}.name`}
-                                                                    className={
-                                                                        classes.marginRight
-                                                                    }
-                                                                />
 
-                                                                <TextField
-                                                                    // label={bInputAdornmentik.name}
-                                                                    name={`bonuses.${index}.value`}
-                                                                    onChange={
-                                                                        handleChange
-                                                                    }
-                                                                    value={
-                                                                        bik.value
-                                                                    }
-                                                                    InputProps={{
-                                                                        endAdornment: (
-                                                                            <InputAdornment position='start'>
-                                                                                €
-                                                                            </InputAdornment>
-                                                                        ),
-                                                                        inputProps: {
-                                                                            style: {
-                                                                                textAlign:
-                                                                                    'right'
-                                                                            }
-                                                                        }
-                                                                    }}
-                                                                    type='number'
-                                                                />
-                                                                <LightTooltip
-                                                                    title='delete'
-                                                                    placement='right'
-                                                                >
-                                                                    <IconButton
-                                                                        aria-label='delete'
-                                                                        onClick={() =>
-                                                                            arrayHelpers.remove(
-                                                                                index
-                                                                            )
-                                                                        }
-                                                                        style={{
-                                                                            padding:
-                                                                                '8px'
-                                                                        }}
-                                                                    >
-                                                                        <DeleteIcon fontSize='small' />
-                                                                    </IconButton>
-                                                                </LightTooltip>
-                                                            </motion.div>
-                                                        );
-                                                    }
-                                                )}
-                                            </AnimatePresence>
-                                        </div>
-                                    )}
-                                </FieldArray>
+                                <DynamicField
+                                    values={values.bonuses}
+                                    addButtonText='shikaka'
+                                />
 
-                                {/* <FormNumberInput
+                                <FormNumberInput
                                     name='property_tax'
                                     label='Property Tax (LPT)'
-                                    handleChange={handleChange}
-                                    value={values.property_tax}
-                                /> */}
+                                />
                                 <p>
                                     <Button
                                         variant='contained'
@@ -192,10 +91,6 @@ const App: React.FC = () => {
 
 const StyledForm = styled(Form)`
     margin-top: 50px;
-`;
-
-const AnimatedDiv = styled.div`
-    transition: 1s;
 `;
 
 interface divProps {
