@@ -1,6 +1,5 @@
 import React from 'react';
 import { FieldArray, Formik, Form, Field } from 'formik';
-
 import {
     Container,
     Button,
@@ -9,7 +8,7 @@ import {
     IconButton
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { createMuiTheme, makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider, withStyles } from '@material-ui/styles';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import FormNumberField from './FormNumberField';
@@ -20,14 +19,8 @@ import calculate_net_pay from './tax-calc';
 import styled, { css } from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import Header from './Header';
-
-const theme = createMuiTheme({
-    palette: {
-        primary: {
-            main: '#f4bf41'
-        }
-    }
-});
+import theme from './muiMainTheme';
+import { initialValues, onSubmit } from './formikConfig';
 
 const useStyles = makeStyles({
     root: {
@@ -35,42 +28,12 @@ const useStyles = makeStyles({
     }
 });
 
-interface FormValues {
-    salary: number | null;
-    tax_credit: number;
-    travel: number | null;
-    property_tax: number | null;
-    bonuses: { id: number; name: string; value: number | null }[];
-}
-
-const initialValues: FormValues = {
-    salary: null,
-    travel: null,
-    bonuses: [{ id: 1, name: 'Health Insurance', value: 166.77 }],
-    tax_credit: 275,
-    property_tax: null
-};
-
 const App: React.FC = () => {
     const classes = useStyles();
     return (
         <Container maxWidth='md' style={{ textAlign: 'center' }}>
             <Header />
-            <Formik
-                initialValues={initialValues}
-                onSubmit={values => {
-                    alert(
-                        calculate_net_pay(
-                            values.salary! / 12,
-                            false,
-                            values.travel!,
-                            0,
-                            values.property_tax!,
-                            values.tax_credit!
-                        )
-                    );
-                }}
-            >
+            <Formik initialValues={initialValues} onSubmit={onSubmit}>
                 {({ values, handleChange }) => (
                     <StyledForm>
                         <Container>
