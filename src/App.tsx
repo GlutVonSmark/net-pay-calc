@@ -19,6 +19,7 @@ import calculate_net_pay from './tax-calc';
 
 import styled, { css } from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
+import Header from './Header';
 
 const theme = createMuiTheme({
     palette: {
@@ -52,39 +53,20 @@ interface FormValues {
     bonuses: { id: number; name: string; value: number | null }[];
 }
 
-const variants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1 }
+const initialValues: FormValues = {
+    salary: null,
+    travel: null,
+    bonuses: [{ id: 1, name: 'Health Insurance', value: 166.77 }],
+    tax_credit: 275,
+    property_tax: null
 };
 
 const App: React.FC = () => {
-    const initialValues: FormValues = {
-        salary: null,
-        travel: null,
-        bonuses: [{ id: 1, name: 'Health Insurance', value: 166.77 }],
-        tax_credit: 275,
-        property_tax: null
-    };
     const classes = useStyles();
     // TODO: handle Blur (what to do with it)
     return (
         <Container maxWidth='md' style={{ textAlign: 'center' }}>
-            <StyledHeader>
-                Using Formik, Material UI with Styled Components and Typescript
-                and Netlify
-            </StyledHeader>
-            <h4>
-                <a
-                    href='https://www.revenue.ie/en/jobs-and-pensions/calculating-your-income-tax/index.aspx'
-                    style={{
-                        textDecoration: 'none',
-                        color: 'grey',
-                        fontFamily: 'roboto'
-                    }}
-                >
-                    official docs
-                </a>
-            </h4>
+            <Header />
             <Formik
                 initialValues={initialValues}
                 onSubmit={values => {
@@ -265,11 +247,6 @@ const App: React.FC = () => {
 
 const StyledForm = styled(Form)`
     margin-top: 50px;
-`;
-
-const StyledHeader = styled.h2`
-    margin-top: 100px;
-    font-family: 'Roboto', 'Consolas';
 `;
 
 const AnimatedDiv = styled.div`
