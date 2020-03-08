@@ -9,12 +9,11 @@ import {
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { makeStyles } from '@material-ui/core/styles';
-import { ThemeProvider, withStyles } from '@material-ui/styles';
+import { ThemeProvider } from '@material-ui/styles';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import FormNumberField from './FormNumberField';
+import FormNumberInput from './FormNumberField';
 import Results from './Results';
 import LightTooltip from './LightTooltip';
-import calculate_net_pay from './tax-calc';
 
 import styled, { css } from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -23,7 +22,7 @@ import theme from './muiMainTheme';
 import { initialValues, onSubmit } from './formikConfig';
 
 const useStyles = makeStyles({
-    root: {
+    marginRight: {
         marginRight: '15px'
     }
 });
@@ -32,31 +31,25 @@ const App: React.FC = () => {
     const classes = useStyles();
     return (
         <Container maxWidth='md' style={{ textAlign: 'center' }}>
-            <Header />
-            <Formik initialValues={initialValues} onSubmit={onSubmit}>
-                {({ values, handleChange }) => (
-                    <StyledForm>
-                        <Container>
-                            <ThemeProvider theme={theme}>
-                                <FormNumberField
-                                    value={values.salary}
+            <ThemeProvider theme={theme}>
+                <Header />
+                <Formik initialValues={initialValues} onSubmit={onSubmit}>
+                    {({ values, handleChange }) => (
+                        <StyledForm>
+                            <Container>
+                                <FormNumberInput
                                     name='salary'
                                     label='Annual salary'
                                     required
-                                    handleChange={handleChange}
-                                ></FormNumberField>
-                                <FormNumberField
+                                />
+                                <FormNumberInput
                                     name='tax_credit'
                                     label='Tax credit'
                                     required
-                                    handleChange={handleChange}
-                                    value={values.tax_credit}
                                 />
-                                <FormNumberField
+                                <FormNumberInput
                                     name='travel'
                                     label='Tax saver ticket'
-                                    handleChange={handleChange}
-                                    value={values.travel}
                                 />
                                 <FieldArray name='bonuses'>
                                     {arrayHelpers => (
@@ -100,7 +93,7 @@ const App: React.FC = () => {
                                                                     }
                                                                     name={`bonuses.${index}.name`}
                                                                     className={
-                                                                        classes.root
+                                                                        classes.marginRight
                                                                     }
                                                                 />
 
@@ -156,12 +149,12 @@ const App: React.FC = () => {
                                     )}
                                 </FieldArray>
 
-                                <FormNumberField
+                                {/* <FormNumberInput
                                     name='property_tax'
                                     label='Property Tax (LPT)'
                                     handleChange={handleChange}
                                     value={values.property_tax}
-                                />
+                                /> */}
                                 <p>
                                     <Button
                                         variant='contained'
@@ -172,27 +165,27 @@ const App: React.FC = () => {
                                         Submito!
                                     </Button>
                                 </p>
-                            </ThemeProvider>
-                        </Container>
-                        <StyledDiv standOut>
-                            {/* {JSON.stringify(values, null, 2)} */}
+                            </Container>
+                            <StyledDiv standOut>
+                                {JSON.stringify(values, null, 2)}
 
-                            {values.salary && values.salary > 0 && (
-                                <Results
-                                    salary={values.salary / 12}
-                                    bik={values.bonuses.reduce(
-                                        (acc, curr) => curr.value! + acc,
-                                        0
-                                    )}
-                                    travel={values.travel!}
-                                    tax_credit={values.tax_credit}
-                                    property_tax={values.property_tax!}
-                                />
-                            )}
-                        </StyledDiv>
-                    </StyledForm>
-                )}
-            </Formik>
+                                {values.salary && values.salary > 0 && (
+                                    <Results
+                                        salary={values.salary / 12}
+                                        bik={values.bonuses.reduce(
+                                            (acc, curr) => curr.value! + acc,
+                                            0
+                                        )}
+                                        travel={values.travel!}
+                                        tax_credit={values.tax_credit}
+                                        property_tax={values.property_tax!}
+                                    />
+                                )}
+                            </StyledDiv>
+                        </StyledForm>
+                    )}
+                </Formik>
+            </ThemeProvider>
         </Container>
     );
 };

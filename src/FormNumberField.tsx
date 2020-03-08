@@ -1,29 +1,34 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import { FieldProps, Field } from 'formik';
 
 interface FormNumberFieldProps {
-    handleChange: (eventOrPath: string | React.ChangeEvent<any>) => void;
-    value: number | null;
+    label: string;
+    required?: boolean;
+    field: FieldProps;
+}
+
+interface FormNumberInputProps {
     name: string;
     label: string;
-    children?: any;
     required?: boolean;
 }
 
-const FormNumberField = ({
-    handleChange,
-    value,
-    name,
-    label,
-    required
-}: FormNumberFieldProps) => (
+const FormNumberInput = ({ name, label, required }: FormNumberInputProps) => (
+    <Field
+        component={FormNumberField}
+        name={name}
+        label={label}
+        required={required}
+    />
+);
+
+const FormNumberField = ({ label, required, field }: FormNumberFieldProps) => (
     <p>
         <TextField
-            name={name}
+            {...field}
             label={label}
-            onChange={handleChange}
-            value={value}
             required={required}
             InputProps={{
                 endAdornment: (
@@ -39,4 +44,4 @@ const FormNumberField = ({
     </p>
 );
 
-export default FormNumberField;
+export default FormNumberInput;
