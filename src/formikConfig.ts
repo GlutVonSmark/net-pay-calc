@@ -6,12 +6,14 @@ interface FormValues {
     travel: number | null;
     property_tax: number | null;
     bonuses: { id: string; name: string; value: number | null }[];
+    deducuctables: { id: string; name: string; value: number | null }[]; // QUESTION: should this be it's onw type if i'm reusing it?
 }
 
 export const initialValues: FormValues = {
     salary: null,
     travel: null,
     bonuses: [{ id: '1abc', name: 'Health Insurance', value: 166.77 }],
+    deducuctables: [],
     tax_credit: 275,
     property_tax: null
 };

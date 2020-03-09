@@ -32,13 +32,17 @@ const App: React.FC = () => {
                                     label='Tax credit'
                                     required
                                 />
-                                <FormNumberInput
+                                {/* <FormNumberInput
                                     name='travel'
                                     label='Tax saver ticket'
-                                />
+                                /> */}
                                 <DynamicField
                                     values={values.bonuses}
                                     addButtonText='shikaka'
+                                />
+                                <DynamicField
+                                    values={values.deducuctables}
+                                    addButtonText='deductable!'
                                 />
                                 <FormNumberInput
                                     name='property_tax'
