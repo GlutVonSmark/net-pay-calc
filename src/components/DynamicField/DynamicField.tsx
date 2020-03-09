@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import styled from 'styled-components';
 import shortid from 'shortid';
 import LightTooltip from '../LightTooltip/LightTooltip';
-import FormNumberInput from '../FormNumberField';
+import FormNumberInput from '../FormNumberField/FormNumberField';
 
 interface Props {
     values: { id: string; name: string; value: number | null }[];

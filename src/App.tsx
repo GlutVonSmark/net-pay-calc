@@ -7,11 +7,11 @@ import Container from '@material-ui/core/Container';
 import { ThemeProvider } from '@material-ui/styles';
 import theme from './muiMainTheme';
 
-import FormNumberInput from './FormNumberField';
-import DynamicField from './DynamicField/DynamicField';
-import Results from './Results';
-import Header from './Header';
-import SubmitButton from './SubmitButton';
+import FormNumberInput from './components/FormNumberField';
+import DynamicField from './components/DynamicField/DynamicField';
+import Results from './components/Results';
+import Header from './components/Header';
+import SubmitButton from './components/SubmitButton';
 
 const App: React.FC = () => {
     return (

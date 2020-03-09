@@ -4,7 +4,7 @@ import calculate_net_pay, {
     calculate_tax,
     calculate_prsi,
     calculate_usc
-} from '../tax-calc';
+} from '../../tax-calc';
 
 interface Props {
     salary: number | null;
