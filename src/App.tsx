@@ -38,11 +38,13 @@ const App: React.FC = () => {
                                 /> */}
                                 <DynamicField
                                     values={values.bonuses}
-                                    addButtonText='shikaka'
+                                    addButtonText='Bonuses'
+                                    name='bonuses'
                                 />
                                 <DynamicField
-                                    values={values.deducuctables}
-                                    addButtonText='deductable!'
+                                    values={values.deductables}
+                                    addButtonText='Deductables'
+                                    name='deductables'
                                 />
                                 <FormNumberInput
                                     name='property_tax'

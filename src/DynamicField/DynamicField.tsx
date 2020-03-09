@@ -3,6 +3,7 @@ import { FieldArray, Field } from 'formik';
 import { Button, TextField, IconButton, makeStyles } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { AnimatePresence, motion } from 'framer-motion';
+import styled from 'styled-components';
 import shortid from 'shortid';
 import LightTooltip from '../LightTooltip/LightTooltip';
 import FormNumberInput from '../FormNumberField';
@@ -10,6 +11,7 @@ import FormNumberInput from '../FormNumberField';
 interface Props {
     values: { id: string; name: string; value: number | null }[];
     addButtonText: string;
+    name: string;
 }
 
 const useStyles = makeStyles({
@@ -20,13 +22,14 @@ const useStyles = makeStyles({
 
 export default function DynamicField({
     values,
-    addButtonText
+    addButtonText,
+    name
 }: Props): ReactElement {
     const classes = useStyles();
     return (
-        <FieldArray name='bonuses'>
+        <FieldArray name={name}>
             {arrayHelpers => (
-                <div>
+                <FormDiv>
                     <Button
                         color='primary'
                         variant='contained'
@@ -41,23 +44,23 @@ export default function DynamicField({
                         {addButtonText}
                     </Button>
                     <AnimatePresence>
-                        {values.map((bik, index) => {
+                        {values.map((item, index) => {
                             return (
                                 <motion.div
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
-                                    key={bik.id}
+                                    key={item.id}
                                     style={{ marginTop: '15px' }}
                                 >
                                     <Field
                                         as={TextField}
-                                        name={`bonuses.${index}.name`}
+                                        name={`${name}.${index}.name`}
                                         className={classes.marginRight}
                                     />
 
                                     <FormNumberInput
-                                        name={`bonuses.${index}.value`}
+                                        name={`${name}.${index}.value`}
                                         label='' // FIXME: make this optional?
                                     />
                                     <LightTooltip
@@ -80,8 +83,13 @@ export default function DynamicField({
                             );
                         })}
                     </AnimatePresence>
-                </div>
+                </FormDiv>
             )}
         </FieldArray>
     );
 }
+
+const FormDiv = styled.div`
+    padding: 20px 0px;
+    border-bottom: 1px #e1e0e1 solid;
+`;
