@@ -2,8 +2,8 @@ import React from 'react';
 import { Formik, Form } from 'formik';
 import { initialValues, onSubmit } from './formikConfig';
 
-import { Container, Button } from '@material-ui/core';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import Container from '@material-ui/core/Container';
+
 import { ThemeProvider } from '@material-ui/styles';
 import theme from './muiMainTheme';
 
@@ -11,6 +11,7 @@ import FormNumberInput from './FormNumberField';
 import DynamicField from './DynamicField/DynamicField';
 import Results from './Results';
 import Header from './Header';
+import SubmitButton from './SubmitButton';
 
 import styled, { css } from 'styled-components';
 
@@ -47,16 +48,7 @@ const App: React.FC = () => {
                                     name='property_tax'
                                     label='Property Tax (LPT)'
                                 />
-                                <p>
-                                    <Button
-                                        variant='contained'
-                                        type='submit'
-                                        color='primary'
-                                        startIcon={<CloudUploadIcon />}
-                                    >
-                                        Submito!
-                                    </Button>
-                                </p>
+                                <SubmitButton />
                             </Container>
                             <StyledDiv standOut>
                                 {/* {JSON.stringify(values, null, 2)} */}
