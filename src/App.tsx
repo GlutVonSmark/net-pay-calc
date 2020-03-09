@@ -1,21 +1,12 @@
 import React from 'react';
-import { FieldArray, Formik, Form, Field } from 'formik';
-import {
-    Container,
-    Button,
-    TextField,
-    InputAdornment,
-    IconButton
-} from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
+import { Formik, Form } from 'formik';
+import { Container, Button } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import FormNumberInput from './FormNumberField';
 import Results from './Results';
-import LightTooltip from './LightTooltip';
 
 import styled, { css } from 'styled-components';
-import { motion, AnimatePresence } from 'framer-motion';
 import Header from './Header';
 import theme from './muiMainTheme';
 import { initialValues, onSubmit } from './formikConfig';
