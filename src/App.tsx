@@ -1,16 +1,18 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
+import { initialValues, onSubmit } from './formikConfig';
+
 import { Container, Button } from '@material-ui/core';
-import { ThemeProvider } from '@material-ui/styles';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import { ThemeProvider } from '@material-ui/styles';
+import theme from './muiMainTheme';
+
 import FormNumberInput from './FormNumberField';
+import DynamicField from './DynamicField/DynamicField';
 import Results from './Results';
+import Header from './Header';
 
 import styled, { css } from 'styled-components';
-import Header from './Header';
-import theme from './muiMainTheme';
-import { initialValues, onSubmit } from './formikConfig';
-import DynamicField from './DynamicField/DynamicField';
 
 const App: React.FC = () => {
     return (
@@ -19,7 +21,7 @@ const App: React.FC = () => {
                 <Header />
                 <Formik initialValues={initialValues} onSubmit={onSubmit}>
                     {({ values, handleChange }) => (
-                        <StyledForm>
+                        <Form style={{ marginTop: '50px' }}>
                             <Container>
                                 <FormNumberInput
                                     name='salary'
@@ -57,7 +59,7 @@ const App: React.FC = () => {
                                 </p>
                             </Container>
                             <StyledDiv standOut>
-                                {JSON.stringify(values, null, 2)}
+                                {/* {JSON.stringify(values, null, 2)} */}
 
                                 {values.salary && values.salary > 0 && (
                                     <Results
@@ -72,17 +74,13 @@ const App: React.FC = () => {
                                     />
                                 )}
                             </StyledDiv>
-                        </StyledForm>
+                        </Form>
                     )}
                 </Formik>
             </ThemeProvider>
         </Container>
     );
 };
-
-const StyledForm = styled(Form)`
-    margin-top: 50px;
-`;
 
 interface divProps {
     readonly standOut?: boolean;
