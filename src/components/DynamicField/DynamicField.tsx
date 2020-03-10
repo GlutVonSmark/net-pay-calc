@@ -9,7 +9,12 @@ import LightTooltip from '../LightTooltip/LightTooltip';
 import FormNumberInput from '../FormNumberField/FormNumberField';
 
 interface Props {
-    values: { id: string; name: string; value: number | null }[];
+    values: {
+        id: string;
+        name: string;
+        value: number | null;
+        enabled: boolean;
+    }[];
     addButtonText: string;
     name: string;
 }
@@ -63,6 +68,12 @@ export default function DynamicField({
                                         name={`${name}.${index}.value`}
                                         label='' // FIXME: make this optional?
                                     />
+                                    {/* see examnple online */}
+                                    <Field
+                                        name={`${name}.${index}.enabled`}
+                                        as={checkbox}
+                                    />
+
                                     <LightTooltip
                                         title='delete'
                                         placement='right'

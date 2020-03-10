@@ -13,12 +13,15 @@ export type NumberFormField = {
     id: string;
     name: string;
     value: number | null;
+    enabled: boolean;
 };
 
 export const initialValues: FormValues = {
     salary: null,
     travel: null,
-    bonuses: [{ id: '1abc', name: 'Health Insurance', value: 166.77 }],
+    bonuses: [
+        { id: '1abc', name: 'Health Insurance', value: 166.77, enabled: false }
+    ],
     deductables: [],
     tax_credit: 275,
     property_tax: null

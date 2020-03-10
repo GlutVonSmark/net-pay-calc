@@ -8,7 +8,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import theme from './muiMainTheme';
 
 import FormNumberInput from './components/FormNumberField';
-import DynamicField from './components/DynamicField/DynamicField';
+import DynamicField from './components/DynamicField';
 import Results from './components/Results';
 import Header from './components/Header';
 import SubmitButton from './components/SubmitButton';
