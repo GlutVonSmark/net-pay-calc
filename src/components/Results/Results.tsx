@@ -8,16 +8,16 @@ import calculate_net_pay, {
 
 interface Props {
     salary: number | null;
-    bik: number;
-    travel: number;
+    bonuses: number;
+    deductables: number;
     tax_credit: number;
     property_tax: number;
 }
 
 export default function Results({
     salary,
-    bik,
-    travel,
+    bonuses,
+    deductables,
     tax_credit,
     property_tax
 }: Props): ReactElement {
@@ -28,11 +28,11 @@ export default function Results({
             <StyledDiv standOut>
                 <StyledPre>
                     {`Calculated Tax: ${calculate_tax(
-                        salary + bik - travel,
+                        salary + bonuses - deductables,
                         tax_credit
                     ).toFixed(2)}
-            Calculated PRSI: ${calculate_prsi(salary + bik - travel).toFixed(2)}
-            Calculated USC: ${calculate_usc(salary + bik - travel)}
+Calculated PRSI: ${calculate_prsi(salary + bonuses - deductables).toFixed(2)}
+Calculated USC: ${calculate_usc(salary + bonuses - deductables)}
             
             
             `}
@@ -42,8 +42,8 @@ export default function Results({
                     {calculate_net_pay(
                         salary,
                         false,
-                        bik,
-                        travel,
+                        bonuses,
+                        deductables,
                         property_tax,
                         tax_credit
                     ).toFixed(2)}

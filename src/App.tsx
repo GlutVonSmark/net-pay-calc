@@ -13,6 +13,8 @@ import Results from './components/Results';
 import Header from './components/Header';
 import SubmitButton from './components/SubmitButton';
 
+import { sumFields } from './helpers';
+
 const App: React.FC = () => {
     return (
         <Container maxWidth='md' style={{ textAlign: 'center' }}>
@@ -32,10 +34,6 @@ const App: React.FC = () => {
                                     label='Tax credit'
                                     required
                                 />
-                                {/* <FormNumberInput
-                                    name='travel'
-                                    label='Tax saver ticket'
-                                /> */}
                                 <DynamicField
                                     values={values.bonuses}
                                     addButtonText='Bonuses'
@@ -57,11 +55,8 @@ const App: React.FC = () => {
 
                             <Results
                                 salary={values.salary}
-                                bik={values.bonuses.reduce(
-                                    (acc, curr) => curr.value! + acc,
-                                    0
-                                )}
-                                travel={values.travel!}
+                                bonuses={sumFields(values.bonuses)}
+                                deductables={sumFields(values.deductables)}
                                 tax_credit={values.tax_credit}
                                 property_tax={values.property_tax!}
                             />

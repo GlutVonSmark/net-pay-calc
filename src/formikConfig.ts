@@ -9,7 +9,7 @@ interface FormValues {
     deductables: NumberFormField[];
 }
 
-type NumberFormField = {
+export type NumberFormField = {
     id: string;
     name: string;
     value: number | null;
