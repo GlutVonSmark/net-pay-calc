@@ -1,12 +1,12 @@
 const calculate_net_pay = (
     pay: number,
     has_pension: boolean,
-    health_insurance: number,
+    health_insurance: number ,
     travel: number,
     LPT: number,
     tax_credit: number
 ): number => {
-    const taxable_gross_pay = pay + health_insurance - travel;
+    const taxable_gross_pay = pay + health_insurance! - travel;
     const pension: number = has_pension ? taxable_gross_pay * 0.03 : 0; // TODO: test this
 
     const usc: number = calculate_usc(taxable_gross_pay);
