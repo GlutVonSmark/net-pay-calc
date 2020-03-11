@@ -1,19 +1,19 @@
 const calculate_net_pay = (
     pay: number,
     has_pension: boolean,
-    health_insurance: number ,
-    travel: number,
+    bonuses: number,
+    deductables: number,
     LPT: number,
     tax_credit: number
 ): number => {
-    const taxable_gross_pay = pay + health_insurance! - travel;
+    const taxable_gross_pay = pay + bonuses! - deductables;
     const pension: number = has_pension ? taxable_gross_pay * 0.03 : 0; // TODO: test this
 
     const usc: number = calculate_usc(taxable_gross_pay);
     const prsi: number = calculate_prsi(taxable_gross_pay);
     const tax: number = calculate_tax(taxable_gross_pay, tax_credit);
 
-    return pay - pension - usc - prsi - tax - travel - LPT;
+    return pay - pension - usc - prsi - tax - deductables - LPT;
 };
 
 type CivilStatus =

@@ -21,7 +21,7 @@ export const initialValues: FormValues = {
     bonuses: [{ id: '1abc', name: 'Health Insurance', value: 166.77 }],
     deductables: [],
     tax_credit: 275,
-    property_tax: null
+    property_tax: null,
 };
 
 export const onSubmit = (values: FormValues) => {
@@ -29,8 +29,8 @@ export const onSubmit = (values: FormValues) => {
         calculate_net_pay(
             values.salary! / 12,
             false,
-            values.travel!,
-            0,
+            values.bonuses.reduce((acc, curr) => curr.value! + acc, 0),
+            values.deductables.reduce((acc, curr) => curr.value! + acc, 0),
             values.property_tax!,
             values.tax_credit!
         )

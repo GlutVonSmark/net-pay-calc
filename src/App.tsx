@@ -32,10 +32,6 @@ const App: React.FC = () => {
                                     label='Tax credit'
                                     required
                                 />
-                                {/* <FormNumberInput
-                                    name='travel'
-                                    label='Tax saver ticket'
-                                /> */}
                                 <DynamicField
                                     values={values.bonuses}
                                     addButtonText='Bonuses'
@@ -57,11 +53,14 @@ const App: React.FC = () => {
 
                             <Results
                                 salary={values.salary}
-                                bik={values.bonuses.reduce(
+                                bonuses={values.bonuses.reduce(
                                     (acc, curr) => curr.value! + acc,
                                     0
                                 )}
-                                travel={values.travel!}
+                                deductables={values.deductables.reduce(
+                                    (acc, curr) => curr.value! + acc,
+                                    0
+                                )}
                                 tax_credit={values.tax_credit}
                                 property_tax={values.property_tax!}
                             />
