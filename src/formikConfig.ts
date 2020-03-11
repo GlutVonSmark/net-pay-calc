@@ -29,8 +29,8 @@ export const onSubmit = (values: FormValues) => {
         calculate_net_pay(
             values.salary! / 12,
             false,
-            values.travel!,
-            0,
+            values.bonuses.reduce((acc, curr) => curr.value! + acc, 0),
+            values.deductables.reduce((acc, curr) => curr.value! + acc, 0),
             values.property_tax!,
             values.tax_credit!
         )
