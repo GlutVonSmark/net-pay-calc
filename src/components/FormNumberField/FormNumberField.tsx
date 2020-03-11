@@ -1,12 +1,13 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import { FieldProps, Field } from 'formik';
+import { Field, getIn, FormikProps, FieldInputProps } from 'formik';
 
 interface FormNumberFieldProps {
     label: string;
     required?: boolean;
-    field: FieldProps;
+    field: FieldInputProps<any>;
+    form: FormikProps<any>;
 }
 
 interface FormNumberInputProps {
@@ -24,20 +25,33 @@ const FormNumberInput = ({ name, label, required }: FormNumberInputProps) => (
     />
 );
 
-const FormNumberField = ({ label, required, field }: FormNumberFieldProps) => (
-    <TextField
-        {...field}
-        label={label}
-        required={required}
-        InputProps={{
-            endAdornment: <InputAdornment position='start'>€</InputAdornment>,
-            inputProps: {
-                style: { textAlign: 'right' }
-            }
-        }}
-        type='number'
-        color='primary'
-    />
-);
+const FormNumberField = ({
+    label,
+    required,
+    field,
+    form: { errors, touched }
+}: FormNumberFieldProps) => {
+    const wasTouched = getIn(touched, field.name);
+    const errorMessage = wasTouched && getIn(errors, field.name);
+    return (
+        <TextField
+            {...field}
+            label={label}
+            required={required}
+            InputProps={{
+                endAdornment: (
+                    <InputAdornment position='start'>€</InputAdornment>
+                ),
+                inputProps: {
+                    style: { textAlign: 'right' }
+                }
+            }}
+            type='number'
+            color='primary'
+            error={errorMessage}
+            helperText={errorMessage}
+        />
+    );
+};
 
 export default FormNumberInput;

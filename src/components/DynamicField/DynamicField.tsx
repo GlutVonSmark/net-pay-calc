@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { FieldArray, Field } from 'formik';
+import { FieldArray, Field, getIn, FieldProps } from 'formik';
 import { Button, TextField, IconButton, makeStyles } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -61,7 +61,7 @@ export default function DynamicField({
                                     style={{ marginTop: '15px' }}
                                 >
                                     <Field
-                                        as={TextField}
+                                        component={FormikTextField}
                                         name={`${name}.${index}.name`}
                                         className={classes.marginRight}
                                     />
@@ -100,3 +100,17 @@ export default function DynamicField({
         </FieldArray>
     );
 }
+
+const FormikTextField = ({ field, form: { errors, touched } }: FieldProps) => {
+    const wasTouched = getIn(touched, field.name);
+    const errorMessage = wasTouched && getIn(errors, field.name);
+    return (
+        <>
+            <TextField
+                {...field}
+                error={errorMessage}
+                helperText={errorMessage}
+            />
+        </>
+    );
+};

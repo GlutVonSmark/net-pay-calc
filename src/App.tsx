@@ -1,9 +1,8 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
-import { initialValues, onSubmit } from './formikConfig';
+import { initialValues, onSubmit, validationSchema } from './formikConfig';
 
 import Container from '@material-ui/core/Container';
-
 import { ThemeProvider } from '@material-ui/styles';
 import theme from './muiMainTheme';
 
@@ -15,13 +14,19 @@ import SubmitButton from './components/SubmitButton';
 
 import { sumFields } from './helpers';
 
+//  { id: '1abc', name: 'Health Insurance', value: 166.77, disabled: true }
+
 const App: React.FC = () => {
     return (
         <Container maxWidth='md' style={{ textAlign: 'center' }}>
             <ThemeProvider theme={theme}>
                 <Header />
-                <Formik initialValues={initialValues} onSubmit={onSubmit}>
-                    {({ values }) => (
+                <Formik
+                    initialValues={initialValues}
+                    onSubmit={onSubmit}
+                    validationSchema={validationSchema}
+                >
+                    {({ errors, values, touched }) => (
                         <Form style={{ marginTop: '50px' }}>
                             <Container>
                                 <FormNumberInput
@@ -52,6 +57,7 @@ const App: React.FC = () => {
                             </Container>
 
                             {/* {JSON.stringify(values, null, 2)} */}
+                            {JSON.stringify(errors, null, 2)}
 
                             <Results
                                 salary={values.salary}
