@@ -71,5 +71,8 @@ export const validationSchema = Yup.object().shape({
                 .nullable(true)
                 .positive('Must be a positive number')
         })
-    )
+    ),
+    property_tax: Yup.number()
+        .nullable(true)
+        .positive('Must be a positive number')
 });
