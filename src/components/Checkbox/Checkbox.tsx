@@ -9,17 +9,21 @@ interface Props {
 
 interface CheckboxProps {
     label: string;
-    field: FieldInputProps<Props>;
+    field: FieldInputProps<any>;
 }
 
 export default ({ name, label }: Props) => {
     return <Field component={FormCheckbox} name={name} label={label} />;
 };
 
-const FormCheckbox = ({ label, field }: CheckboxProps) => (
-    <FormControlLabel
-        style={{ marginLeft: '15px' }}
-        control={<Checkbox {...field} value={field.value} color='default' />}
-        label={label}
-    />
-);
+const FormCheckbox = ({ label, field }: CheckboxProps) => {
+    return (
+        <FormControlLabel
+            style={{ marginLeft: '15px' }}
+            control={
+                <Checkbox {...field} color='default' checked={field.value} />
+            }
+            label={label}
+        />
+    );
+};
