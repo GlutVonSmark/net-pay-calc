@@ -14,8 +14,6 @@ import SubmitButton from './components/SubmitButton';
 
 import { sumFields } from './helpers';
 
-//  { id: '1abc', name: 'Health Insurance', value: 166.77, disabled: true }
-
 const App: React.FC = () => {
     return (
         <Container maxWidth='md' style={{ textAlign: 'center' }}>
@@ -57,7 +55,7 @@ const App: React.FC = () => {
                             </Container>
 
                             {/* {JSON.stringify(values, null, 2)} */}
-                            {JSON.stringify(errors, null, 2)}
+                            {/* {JSON.stringify(errors, null, 2)} */}
 
                             <Results
                                 salary={values.salary}
