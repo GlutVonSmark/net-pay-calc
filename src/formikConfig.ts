@@ -31,6 +31,7 @@ export const onSubmit = (values: FormValues) => {
         calculate_net_pay(
             values.salary! / 12,
             false,
+
             sumFields(values.bonuses),
             sumFields(values.deductables),
             values.property_tax!,

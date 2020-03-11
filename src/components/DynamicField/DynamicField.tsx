@@ -3,11 +3,13 @@ import { FieldArray, Field } from 'formik';
 import { Button, TextField, IconButton, makeStyles } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { AnimatePresence, motion } from 'framer-motion';
-import styled from 'styled-components';
+
 import shortid from 'shortid';
 import LightTooltip from '../LightTooltip/LightTooltip';
 import FormNumberInput from '../FormNumberField/FormNumberField';
 import Checkbox from '../Checkbox';
+
+
 
 interface Props {
     values: {
@@ -99,8 +101,3 @@ export default function DynamicField({
         </FieldArray>
     );
 }
-
-const FormDiv = styled.div`
-    padding: 20px 0px;
-    border-bottom: 1px #e1e0e1 solid;
-`;
