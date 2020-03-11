@@ -21,4 +21,5 @@ export default () => (
 
 const StyledHeader = styled.h2`
     margin-top: 100px;
+    font-family: 'roboto', 'sans-sarif';
 `;
