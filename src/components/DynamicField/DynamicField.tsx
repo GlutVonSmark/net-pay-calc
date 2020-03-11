@@ -8,8 +8,7 @@ import shortid from 'shortid';
 import LightTooltip from '../LightTooltip/LightTooltip';
 import FormNumberInput from '../FormNumberField/FormNumberField';
 import Checkbox from '../Checkbox';
-
-
+import FormDiv from './FormDiv';
 
 interface Props {
     values: {
