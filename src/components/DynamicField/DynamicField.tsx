@@ -7,10 +7,17 @@ import { AnimatePresence, motion } from 'framer-motion';
 import shortid from 'shortid';
 import LightTooltip from '../LightTooltip/LightTooltip';
 import FormNumberInput from '../FormNumberField/FormNumberField';
-import FormDiv from './FormDiv';
+import Checkbox from '../Checkbox';
+
+
 
 interface Props {
-    values: { id: string; name: string; value: number | null }[];
+    values: {
+        id: string;
+        name: string;
+        value: number | null;
+        disabled: boolean;
+    }[];
     addButtonText: string;
     name: string;
 }
@@ -64,6 +71,11 @@ export default function DynamicField({
                                         name={`${name}.${index}.value`}
                                         label='' // FIXME: make this optional?
                                     />
+                                    <Checkbox
+                                        name={`${name}.${index}.disabled`}
+                                        label='disabled'
+                                    />
+
                                     <LightTooltip
                                         title='delete'
                                         placement='right'
