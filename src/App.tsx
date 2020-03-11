@@ -51,7 +51,7 @@ const App: React.FC = () => {
                                 <SubmitButton />
                             </Container>
 
-                            {/* {JSON.stringify(values, null, 2)} */}
+                            {JSON.stringify(values, null, 2)}
 
                             <Results
                                 salary={values.salary}

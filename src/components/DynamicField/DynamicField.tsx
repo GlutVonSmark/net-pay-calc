@@ -7,13 +7,14 @@ import styled from 'styled-components';
 import shortid from 'shortid';
 import LightTooltip from '../LightTooltip/LightTooltip';
 import FormNumberInput from '../FormNumberField/FormNumberField';
+import Checkbox from '../Checkbox';
 
 interface Props {
     values: {
         id: string;
         name: string;
         value: number | null;
-        enabled: boolean;
+        disabled: boolean;
     }[];
     addButtonText: string;
     name: string;
@@ -68,10 +69,9 @@ export default function DynamicField({
                                         name={`${name}.${index}.value`}
                                         label='' // FIXME: make this optional?
                                     />
-                                    {/* see examnple online */}
-                                    <Field
-                                        name={`${name}.${index}.enabled`}
-                                        as={checkbox}
+                                    <Checkbox
+                                        name={`${name}.${index}.disabled`}
+                                        label='disabled'
                                     />
 
                                     <LightTooltip
